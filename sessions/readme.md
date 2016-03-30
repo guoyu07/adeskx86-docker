@@ -1,0 +1,1 @@
+这个目录里会存放run0.rb执行完成后保存的session.conf信息
