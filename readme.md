@@ -17,10 +17,15 @@ adesk-x86客户端本身是一台小瘦终端，上面安装了一个debian系�
 > `ruby run0.rb id1 id2 `
 > 其中，id1 id2是用户名后面的数字，例如要保存user1..user100的登录信息，就运行`ruby run0.rb 1 100`
 
-2. 执行run1.rb来操作虚拟桌面资源
+2. 执行run1.rb来启动容器，容器中的tcpserver会等待tcpclient发消息，来操作虚拟桌面资源
 
-> `ruby run1.rb id1 id2 opt rcid  n  time`
-> 其中，id1 id2是用户名后面的数字，opt为操作类型-q/-s/-r，rcid为资源ID，n为尝试此时，time为每次尝试的间隔时间
+> `ruby run1.rb id1 id2`
+> 其中，id1 id2是用户名后面的数字
+
+3. 执行tcpclient来给所有的容器发消息
+
+> `ruby test/httpclient.rb opt rcid  n  time`
+> 其中，opt为虚拟机操作类型，如-q/-s/-r分别表示启动/关闭/重置, rcid为资源ID，是VDC上的资源ID，可以从VDC控制台按F12看到资源ID， n为尝试次数（只对-q有效），time为尝试间隔时间（只对-q有效）
 
 ## 镜像
 
