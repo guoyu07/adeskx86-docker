@@ -45,7 +45,7 @@ def run_aclient(opt, rcid, n, time)
                 stdout.close
                 err = stderr.gets(nil)
                 stderr.close
-                if  out.include?("\"result\":\"1\"") 
+                if out && out.include?("\"result\":\"1\"") 
                         return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => true, "out" => out, "err" => err, "time" => nn-n}
                 end
 	else	

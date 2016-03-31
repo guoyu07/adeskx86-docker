@@ -36,6 +36,7 @@ def run_docker(arr, opt, rcid, n, time)
    t<<Thread.new{ system("docker run -it --rm  -e DISPLAY "+  
 			 "-v /etc/localtime:/etc/localtime " +  
 			 "-v /tmp:/tmp "+ 
+       "-v /home/sangfor/x86/test/:/test/ " + 
 			 "-v /home/sangfor/x86/sessions/user#{user}_session.conf:/run/adesk/session.conf "+ 
 			 "-v /home/sangfor/x86/aclient.rb:/aclient.rb "+ 
 			 "-v /home/sangfor/x86/ui.js:/usr/local/share/adesk/ec/js/ui.js "+  
@@ -43,7 +44,7 @@ def run_docker(arr, opt, rcid, n, time)
 			 "-v /home/sangfor/x86/users/user#{user}.conf:/etc/adesk/user.conf "+ 
 			 "-v /tmp/.X11-unix:/tmp/.X11-unix "+  
 			 "mimi/x86:1.6 " +
-			 "ruby /aclient.rb #{opt} #{rcid} #{n} #{time}")}
+			 "ruby /test/httpserver.rb")}
   }
   t.each {|tt|
     tt.join
