@@ -49,17 +49,26 @@ def run_aclient(opt, rcid, n, time)
                         return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => true, "out" => out, "err" => err, "time" => nn-n}
                 end
 	else	
+		max = 100
 	    while n > 0
-		n = n - 1
-		stdin,stdout,stderr,wait_thr = Open3.popen3("adesk-client", "vdesktop", "#{opt}", "-i", "#{rcid}")
-		out = stdout.gets(nil)
-		stdout.close
-		err = stderr.gets(nil)
-		stderr.close
-		if out && (out.include?("\"res_state\": 3") )
-			return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => true, "out" => out, "err" => err, "time" => nn-n}
-		end
-		sleep time # 此处sleep会造成时间误差，误差范围为0~time秒
+			n = n - 1
+			stdin,stdout,stderr,wait_thr = Open3.popen3("adesk-client", "vdesktop", "#{opt}", "-i", "#{rcid}")
+			out = stdout.gets(nil)
+			stdout.close
+			err = stderr.gets(nil)
+			stderr.close
+			if out && (out.include?("\"res_state\": 3") )
+				return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => true, "out" => out, "err" => err, "time" => nn-n}
+			end
+			# 04/01/2016 mimi, 增加对系统本身错误的判断，
+			# adesk-client 返回"read fail, sh, ret=-2, errno=11, strerror=Resource temporarily unavailable"
+			# 表示用户连接数太多，系统直接返回的错误，而不是vdictrl返回的
+			# 这种情况，最多尝试100次
+			if max > 0 && err && (err.include?("Resource temporarily unavailable"))
+				n = n + 1
+				max = max - 1
+			end
+			sleep time # 此处sleep会造成时间误差，误差范围为0~time秒
 	    end
 	end
 	return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => false, "out" => out, "err" => err, "time" => nn-n}
