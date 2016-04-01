@@ -105,8 +105,8 @@ def func2(file)
 	else	
 		all_time = end_times[-1][1]['EndTime'].split("-")[0].to_i*3600 + end_times[-1][1]['EndTime'].split("-")[1].to_i*60 + end_times[-1][1]['EndTime'].split("-")[2].to_i - start_times[0][1]['StartTime'].split("-")[0].to_i*3600 - start_times[0][1]['StartTime'].split("-")[1].to_i*60 - start_times[0][1]['StartTime'].split("-")[2].to_i
 		#puts "* Success Client used time: [AllTime]#{all_time}s, [AVG]#{user_all_time*1.0/ok_num}s" 
-		puts "* 所有执行结果为成功的容器，从第一个容器开始执行，到最有一个容器执行完成，总共消耗时间为: [AllTimeUsed]#{all_time}秒。(容器并发启动是有一些时间间隔的)"
-		puts "* 所有执行结果为成功的容器，执行操作所消耗的总时间为: [AllTimeExe]#{user_all_time}秒， 平均每个容器执行操作所消耗的时间为: [AVG]#{user_all_time*1.0/ok_num}秒" 
+		puts "* 所有执行结果为成功的容器，从第一个容器开始执行，到最有一个容器执行完成，总共消耗时间为: [AllTimeUsed]#{all_time}秒"
+		puts "* 所有执行结果为成功的容器，平均每个容器执行操作所消耗的时间为: [AVG]#{user_all_time*1.0/ok_num}秒" 
 		#puts "* Success Client start from #{start_times[0][1]['StartTime']} to #{start_times[-1][1]['StartTime']}"
 		puts "* 执行结果为成功的容器中，最早开始执行的容器是 #{start_times[0][1]}"
 		puts "* 执行结果为成功的容器中，最晚开始执行的容器是 #{start_times[-1][1]}"

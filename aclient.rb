@@ -50,15 +50,17 @@ def run_aclient(opt, rcid, n, time)
                 end
 	else	
 		max = 100
+		real_retry_times = 0
 	    while n > 0
 			n = n - 1
 			stdin,stdout,stderr,wait_thr = Open3.popen3("adesk-client", "vdesktop", "#{opt}", "-i", "#{rcid}")
+			real_retry_times  = real_retry_times + 1
 			out = stdout.gets(nil)
 			stdout.close
 			err = stderr.gets(nil)
 			stderr.close
 			if out && (out.include?("\"res_state\": 3") )
-				return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => true, "out" => out, "err" => err, "time" => nn-n}
+				return {"cmd" => "adesk-client vdesktop #{opt} -i #{rcid}", "result" => true, "out" => out, "err" => err, "time" => nn -n, "real_retry_times" => real_retry_times}
 			end
 			# 04/01/2016 mimi, 增加对系统本身错误的判断，
 			# adesk-client 返回"read fail, sh, ret=-2, errno=11, strerror=Resource temporarily unavailable"
