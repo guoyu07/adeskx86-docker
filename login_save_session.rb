@@ -30,6 +30,7 @@ begin
                 break
           end
           timeout = timeout - 1
+          system("adesk-autostart.sh") if 100 == timeout # 如果等了50秒还没有登录成功，有可能页面出错停了，这时应该重新拉起客户端
           sleep 0.5 # 由于并发登录VDC不是本次测试重点，而且并发登录会消耗大量CPU资源，暂时将登录VDC和开启资源的操作分开执行
 	end
 rescue => err
