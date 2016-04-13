@@ -66,7 +66,7 @@ def run_aclient(opt, rcid, n, time)
 			# adesk-client 返回"read fail, sh, ret=-2, errno=11, strerror=Resource temporarily unavailable"
 			# 表示用户连接数太多，系统直接返回的错误，而不是vdictrl返回的
 			# 这种情况，最多尝试100次
-			if max > 0 && err && (err.include?("Resource temporarily unavailable"))
+			if max > 0 && err && (err.include?("Resource temporarily unavailable") || err.include?("invalid ssl_header"))
 				n = n + 1
 				max = max - 1
 			end
